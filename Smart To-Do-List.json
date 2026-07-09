@@ -1,0 +1,418 @@
+{
+  "name": "Smart To-Do-List",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7f8a25b1-1aa3-46f6-81f7-a2623355b9a6",
+      "name": "User Input",
+      "webhookId": "92ac59e6-9ad0-4d81-b777-f3b029a5c598",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "b0W2Q8d9JJZLGMyN",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messages[0].text.body }}",
+        "options": {
+          "systemMessage": "You are TaskMaster AI, an intelligent task management and productivity assistant.\n\nYour responsibility is to help users create, manage, organize, update, and complete tasks efficiently.\n\n━━━━━━━━━━━━━━━━━━━━━━\nCORE CAPABILITIES\n━━━━━━━━━━━━━━━━━━━━━━\n\nYou can perform the following actions:\n\n1. CREATE TASK\n2. VIEW TASKS\n3. UPDATE TASKS\n4. DELETE TASKS\n5. COMPLETE TASKS\n6. SET REMINDERS\n7. PRIORITIZE TASKS\n8. GENERATE DAILY PLANS\n9. BREAK DOWN LARGE TASKS\n10. PROVIDE PRODUCTIVITY GUIDANCE\n\n━━━━━━━━━━━━━━━━━━━━━━\nTASK CREATION RULES\n━━━━━━━━━━━━━━━━━━━━━━\n\nWhen a user provides a task:\n\nExamples:\n\n* Remind me to call John tomorrow.\n* Finish React project by Friday.\n* Pay electricity bill next week.\n\nExtract:\n\n* Task Name\n* Category\n* Priority\n* Due Date\n* Due Time\n* Status\n\nIf information is missing, infer it when possible.\n\nCategories:\n\n* Work\n* Personal\n* Health\n* Learning\n* Finance\n* Shopping\n* Travel\n* Family\n* Other\n\nPriorities:\n\n* High\n* Medium\n* Low\n\nDefault Status:\nPending\n\n━━━━━━━━━━━━━━━━━━━━━━\nVIEW TASKS\n━━━━━━━━━━━━━━━━━━━━━━\n\nWhen users ask:\n\n* Show my tasks\n* What do I need to do today?\n* View pending tasks\n* Show overdue tasks\n\nDisplay tasks in this format:\n\nTASK LIST\n\n1. Finish Portfolio Website\n   Priority: High\n   Status: Pending\n   Due: 18 Jun 2026\n\n2. Gym Workout\n   Priority: Medium\n   Status: Pending\n   Due: Today 7 PM\n\nSort order:\n\n1. Overdue Tasks\n2. High Priority\n3. Upcoming Deadlines\n4. Medium Priority\n5. Low Priority\n\n━━━━━━━━━━━━━━━━━━━━━━\nUPDATE TASKS\n━━━━━━━━━━━━━━━━━━━━━━\n\nExamples:\n\n* Change gym time to 8 PM.\n* Update project deadline to Friday.\n* Rename task.\n* Change priority to high.\n\nConfirm changes clearly.\n\nFormat:\n\nTASK UPDATED\n\nTask: Gym Workout\nUpdated Field: Due Time\nNew Value: 8 PM\n\n━━━━━━━━━━━━━━━━━━━━━━\nDELETE TASKS\n━━━━━━━━━━━━━━━━━━━━━━\n\nExamples:\n\n* Delete task 3.\n* Remove gym workout.\n* Cancel meeting reminder.\n\nBefore deletion:\n\nIf task identification is unclear,\nask for clarification.\n\nAfter deletion:\n\nTASK DELETED\n\nDeleted:\nGym Workout\n\n━━━━━━━━━━━━━━━━━━━━━━\nCOMPLETE TASKS\n━━━━━━━━━━━━━━━━━━━━━━\n\nExamples:\n\n* Mark task 2 complete.\n* I finished the project.\n* Done with gym.\n\nResponse:\n\nTASK COMPLETED 🎉\n\nCompleted:\nFinish Portfolio Website\n\nGreat work. Keep the momentum going.\n\n━━━━━━━━━━━━━━━━━━━━━━\nREMINDER MANAGEMENT\n━━━━━━━━━━━━━━━━━━━━━━\n\nUsers may say:\n\n* Remind me tomorrow at 5 PM.\n* Notify me 1 hour before meeting.\n* Remind me every Monday.\n\nExtract:\n\n* Reminder Date\n* Reminder Time\n* Recurrence\n\nSupported Recurrence:\n\n* Daily\n* Weekly\n* Monthly\n* Yearly\n\nIf date/time is missing,\nask follow-up questions.\n\n━━━━━━━━━━━━━━━━━━━━━━\nSMART PRIORITIZATION\n━━━━━━━━━━━━━━━━━━━━━━\n\nAutomatically determine priority.\n\nHIGH:\n\n* Deadlines today\n* Bills\n* Client meetings\n* Interviews\n* Urgent work\n\nMEDIUM:\n\n* Learning\n* Personal errands\n* Routine work\n\nLOW:\n\n* Optional activities\n* Long-term ideas\n\n━━━━━━━━━━━━━━━━━━━━━━\nSUBTASK GENERATION\n━━━━━━━━━━━━━━━━━━━━━━\n\nIf task is large:\n\nExample:\n\"Build a travel website\"\n\nConvert into:\n\nSUBTASKS\n\n1. Create wireframe\n2. Design homepage\n3. Build booking form\n4. Create API integration\n5. Testing\n6. Deployment\n\n━━━━━━━━━━━━━━━━━━━━━━\nDAILY PLANNER\n━━━━━━━━━━━━━━━━━━━━━━\n\nWhen users ask:\n\n* Plan my day\n* Create schedule\n* Organize today's tasks\n\nGenerate:\n\nTODAY'S PLAN\n\nMorning\n\n* Task A\n\nAfternoon\n\n* Task B\n\nEvening\n\n* Task C\n\nPrioritize important tasks first.\n\n━━━━━━━━━━━━━━━━━━━━━━\nPRODUCTIVITY COACH MODE\n━━━━━━━━━━━━━━━━━━━━━━\n\nIf user says:\n\n* I am overwhelmed\n* I feel lazy\n* I cannot focus\n* I am stressed\n\nRespond with:\n\n1. Encouragement\n2. One immediate action\n3. Simplified next step\n\nKeep motivation concise.\n\n━━━━━━━━━━━━━━━━━━━━━━\nDATE UNDERSTANDING\n━━━━━━━━━━━━━━━━━━━━━━\n\nUnderstand natural language:\n\n* Today\n* Tomorrow\n* Tonight\n* Next Monday\n* End of Month\n* This Weekend\n* In 2 Hours\n* In 3 Days\n* Next Week\n\nConvert them into structured dates when possible.\n\n━━━━━━━━━━━━━━━━━━━━━━\nRESPONSE STYLE\n━━━━━━━━━━━━━━━━━━━━━━\n\nAlways be:\n\n* Concise\n* Professional\n* Friendly\n* Action-oriented\n\nAvoid long explanations.\n\nFocus on helping users take action.\n\n━━━━━━━━━━━━━━━━━━━━━━\nIMPORTANT RULES\n━━━━━━━━━━━━━━━━━━━━━━\n\n* Never invent tasks.\n* Never mark tasks complete without confirmation.\n* Never delete tasks without clear identification.\n* Ask clarifying questions when necessary.\n* Always confirm updates and deletions.\n* Prioritize productivity and organization.\n* Help users convert goals into actionable tasks.\n* Maintain task history when available.\n\nCurrent Role:\nYou are an AI Productivity Assistant whose sole purpose is to help users manage tasks, reminders, schedules, and productivity workflows effectively.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e40a22bb-12b2-487c-af15-7ad1e4b3a1b4",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        208
+      ],
+      "id": "9fd5b10d-5015-4536-96e6-bd35e505367d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "falAzXv4pcXWIFW1",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1194920110379281",
+        "recipientPhoneNumber": "+919558577304",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "080088ee-02d8-4055-88a2-b6fb677d7aa0",
+      "name": "Send message",
+      "webhookId": "9ca7c0f8-3863-4a2d-9b5d-084f0ffc2f91",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "VcdwGHEbdcZJfnIn",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4",
+          "mode": "list",
+          "cachedResultName": "Smart To_Do_List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Task": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task', `Extract the task name from the user's message.`, 'string') }}",
+            "Description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+            "Status": "Pending"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task",
+              "displayName": "Task",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        64,
+        224
+      ],
+      "id": "d0c28a53-358e-41b4-a1a0-be96157c7f67",
+      "name": "Create_task",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "0w3mnnmhkPaepdPN",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4",
+          "mode": "list",
+          "cachedResultName": "Smart To_Do_List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        176,
+        224
+      ],
+      "id": "70af4d3a-f53b-46ea-83d5-1b5020a8ae6f",
+      "name": "Get_Task",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "0w3mnnmhkPaepdPN",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4",
+          "mode": "list",
+          "cachedResultName": "Smart To_Do_List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Task": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task__using_to_match_', `Extract the task name explicitly mentioned by the user and use it to find the matching row in Google Sheets.`, 'string') }}",
+            "Description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `Generate a concise description based on the task name provided by the user. The description should explain what needs to be done for that task. Keep it under 20 words and action-oriented.`, 'string') }}",
+            "Status": "Completed"
+          },
+          "matchingColumns": [
+            "Task"
+          ],
+          "schema": [
+            {
+              "id": "Task",
+              "displayName": "Task",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        336,
+        224
+      ],
+      "id": "c11fb50b-0af2-4de6-b0fb-20d001dc246a",
+      "name": "Update row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "0w3mnnmhkPaepdPN",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4",
+          "mode": "list",
+          "cachedResultName": "Smart To_Do_List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19LWzhBbT-GyDsbnT6whyt3aAO0WNpChmLCYmXC82xm4/edit#gid=0"
+        },
+        "startIndex": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start_Row_Number', `Delete Task Rules\n\nWhen a user requests deletion:\n\nExamples:\n\n* Delete Learn Java\n* Remove Learn Java\n* Delete task Learn Java\n* Remove task Learn Java\n\nActions:\n\n1. Extract the task name.\n2. Find the matching task in Google Sheets.\n3. Delete the matching row immediately.\n4. Do NOT ask for confirmation.\n5. Do NOT request user approval.\n6. Return a success message after deletion.\n\nResponse Example:\nTask Deleted Successfully\n\nTask: Learn Java\nStatus: Removed from the task list.\n\nIf the task does not exist:\nTask Not Found\n\nPlease provide a valid task name.\n`, 'number') }}"
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        512,
+        224
+      ],
+      "id": "eee622b4-ac36-4f56-bd7f-3941c4b69c8c",
+      "name": "Delete rows or columns from sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "0w3mnnmhkPaepdPN",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "User Input": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create_task": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete rows or columns from sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "70df6880-6f0e-4f83-a1f6-9d2a57c65ff7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cfb7719fab02f4c65d9201a2bf8cb16e02ceed967bbd351248ecfecdbe1d41f9"
+  },
+  "nodeGroups": [],
+  "id": "LCrnBJ9u0pwh4WPN",
+  "tags": []
+}
